@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext.jsx";
 
 const BASE_URL = "http://127.0.0.1:5000";
@@ -19,7 +19,7 @@ export default function EditProfile() {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 
-  // Load user data into the form once user exists
+  // When user loads, prefill the form
   useEffect(() => {
     if (!user) return;
 
@@ -62,7 +62,7 @@ export default function EditProfile() {
         throw new Error(data?.error || data?.message || "Update failed");
       }
 
-      // Update the user in context so Profile updates immediately
+      // Update context user so Profile updates immediately
       setUser(data);
 
       setMessage("Profile updated!");
@@ -72,59 +72,102 @@ export default function EditProfile() {
     }
   }
 
-  if (!token) return <p style={{ padding: 16 }}>Please login.</p>;
-  if (!user) return <p style={{ padding: 16 }}>Loading...</p>;
+  if (!token) {
+    return (
+      <div className="page">
+        <div className="card">
+          <h2>Edit Profile</h2>
+          <p className="error">Please login to edit your profile.</p>
+          <div className="btn-row">
+            <Link className="btn" to="/login">Go to Login</Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="page">
+        <div className="card">
+          <h2>Edit Profile</h2>
+          <p className="small">Loading your profile...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div style={{ padding: 16 }}>
-      <h2>Edit Profile</h2>
+    <div className="page">
+      <div className="card">
+        <h2>Edit Profile</h2>
+        <p className="small">Update your mechanic information below.</p>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {message && <p>{message}</p>}
+        {error && <p className="error">{error}</p>}
+        {message && <p className="success">{message}</p>}
 
-      <form onSubmit={handleSubmit}>
-        <input
-          name="first_name"
-          placeholder="First name"
-          value={form.first_name}
-          onChange={handleChange}
-        />
-        <br />
+        <form className="form" onSubmit={handleSubmit}>
+          <div className="field">
+            <label className="label">First Name</label>
+            <input
+              className="input"
+              name="first_name"
+              value={form.first_name}
+              onChange={handleChange}
+            />
+          </div>
 
-        <input
-          name="last_name"
-          placeholder="Last name"
-          value={form.last_name}
-          onChange={handleChange}
-        />
-        <br />
+          <div className="field">
+            <label className="label">Last Name</label>
+            <input
+              className="input"
+              name="last_name"
+              value={form.last_name}
+              onChange={handleChange}
+            />
+          </div>
 
-        <input
-          name="email"
-          placeholder="Email"
-          value={form.email}
-          onChange={handleChange}
-        />
-        <br />
+          <div className="field">
+            <label className="label">Email</label>
+            <input
+              className="input"
+              name="email"
+              value={form.email}
+              onChange={handleChange}
+            />
+          </div>
 
-        <input
-          name="salary"
-          placeholder="Salary"
-          value={form.salary}
-          onChange={handleChange}
-        />
-        <br />
+          <div className="field">
+            <label className="label">Salary</label>
+            <input
+              className="input"
+              name="salary"
+              value={form.salary}
+              onChange={handleChange}
+            />
+          </div>
 
-        <input
-          name="address"
-          placeholder="Address"
-          value={form.address}
-          onChange={handleChange}
-        />
-        <br />
+          <div className="field">
+            <label className="label">Address</label>
+            <input
+              className="input"
+              name="address"
+              value={form.address}
+              onChange={handleChange}
+            />
+          </div>
 
-        <button type="submit">Save</button>
-      </form>
+          <div className="btn-row">
+            <button className="btn" type="submit">
+              Save Changes
+            </button>
+
+            <Link className="btn btn-outline" to="/">
+              Cancel
+            </Link>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

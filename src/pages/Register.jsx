@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const BASE_URL = "http://127.0.0.1:5000";
 
 export default function Register() {
   const navigate = useNavigate();
+
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
@@ -26,6 +27,7 @@ export default function Register() {
     setError("");
     setSuccess("");
 
+    // Convert salary to number (backend expects a numeric value)
     const payload = {
       ...form,
       salary: Number(form.salary),
@@ -52,64 +54,95 @@ export default function Register() {
   }
 
   return (
-    <div style={{ padding: 16 }}>
-      <h2>Register Mechanic</h2>
+    <div className="page">
+      <div className="card">
+        <h2>Register Mechanic</h2>
+        <p className="small">
+          Create your mechanic account to access your profile and tickets.
+        </p>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {success && <p>{success}</p>}
+        {error && <p className="error">{error}</p>}
+        {success && <p className="success">{success}</p>}
 
-      <form onSubmit={handleSubmit}>
-        <input
-          name="first_name"
-          placeholder="First name"
-          value={form.first_name}
-          onChange={handleChange}
-        />
-        <br />
+        <form className="form" onSubmit={handleSubmit}>
+          <div className="field">
+            <label className="label">First Name</label>
+            <input
+              className="input"
+              name="first_name"
+              placeholder="Rick"
+              value={form.first_name}
+              onChange={handleChange}
+            />
+          </div>
 
-        <input
-          name="last_name"
-          placeholder="Last name"
-          value={form.last_name}
-          onChange={handleChange}
-        />
-        <br />
+          <div className="field">
+            <label className="label">Last Name</label>
+            <input
+              className="input"
+              name="last_name"
+              placeholder="James"
+              value={form.last_name}
+              onChange={handleChange}
+            />
+          </div>
 
-        <input
-          name="email"
-          placeholder="Email"
-          value={form.email}
-          onChange={handleChange}
-        />
-        <br />
+          <div className="field">
+            <label className="label">Email</label>
+            <input
+              className="input"
+              name="email"
+              placeholder="rjames@example.com"
+              value={form.email}
+              onChange={handleChange}
+            />
+          </div>
 
-        <input
-          name="salary"
-          placeholder="Salary"
-          value={form.salary}
-          onChange={handleChange}
-        />
-        <br />
+          <div className="field">
+            <label className="label">Salary</label>
+            <input
+              className="input"
+              name="salary"
+              placeholder="60000"
+              value={form.salary}
+              onChange={handleChange}
+            />
+          </div>
 
-        <input
-          name="address"
-          placeholder="Address"
-          value={form.address}
-          onChange={handleChange}
-        />
-        <br />
+          <div className="field">
+            <label className="label">Address</label>
+            <input
+              className="input"
+              name="address"
+              placeholder="300 Hawthorne Ln"
+              value={form.address}
+              onChange={handleChange}
+            />
+          </div>
 
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={handleChange}
-        />
-        <br />
+          <div className="field">
+            <label className="label">Password</label>
+            <input
+              className="input"
+              type="password"
+              name="password"
+              placeholder="••••••••"
+              value={form.password}
+              onChange={handleChange}
+            />
+          </div>
 
-        <button type="submit">Create Account</button>
-      </form>
+          <div className="btn-row">
+            <button className="btn" type="submit">
+              Create Account
+            </button>
+
+            <Link className="btn btn-outline" to="/login">
+              Already have an account?
+            </Link>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

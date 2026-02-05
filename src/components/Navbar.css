@@ -1,22 +1,29 @@
 .nav {
   display: flex;
   gap: 12px;
-  padding: 12px 16px;
-  border-bottom: 1px solid #ddd;
   align-items: center;
+  padding: 12px 18px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #ffffff;
 }
 
 .nav-link {
+  color: #111827;
   text-decoration: none;
-  color: #222;
+  font-weight: 800;
 }
 
-.nav-link:hover {
-  text-decoration: underline;
-}
+.nav-link:hover { text-decoration: underline; }
 
 .nav-btn {
   margin-left: auto;
-  padding: 6px 10px;
+  padding: 8px 12px;
+  border: 1px solid #92400e;
+  background: #d97706;
+  color: #111827;
+  border-radius: 8px;
   cursor: pointer;
+  font-weight: 800;
 }
+
+.nav-btn:hover { opacity: 0.92; }
